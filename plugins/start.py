@@ -88,13 +88,13 @@ async def start_command(client: Client, message: Message):
             except:
                 pass
 
-        k = await message.reply_text("<b>👆ᴛʜɪs ᴡɪʟʟ ʙᴇ ᴅᴇʟᴇᴛᴇᴅ ɪɴ 5 ᴍɪɴᴜᴛᴇs\n❗️ғᴏʀᴡᴀʀᴅ ɪᴛ ᴛᴏ ʏᴏᴜʀ sᴀᴠᴇᴅ ᴍᴇssᴀɢᴇs ʙᴇғᴏʀᴇ ᴅᴏᴡɴʟᴏᴀᴅɪᴍɢ\n[🔎ᴄʟɪᴄᴋ]({get}) ᴛᴏ ɢᴇᴛ ᴀɢᴀɪɴ.</b>")
+        k = await message.reply_text("<b>👆ᴛʜɪs ᴡɪʟʟ ʙᴇ ᴅᴇʟᴇᴛᴇᴅ ɪɴ 5 ᴍɪɴᴜᴛᴇs\n❗️ғᴏʀᴡᴀʀᴅ ɪᴛ ᴛᴏ ʏᴏᴜʀ sᴀᴠᴇᴅ ᴍᴇssᴀɢᴇs ʙᴇғᴏʀᴇ ᴅᴏᴡɴʟᴏᴀᴅɪɴɢ.</b>")
         await asyncio.sleep(SECONDS)
 
         for data in Codeflix:
             try:
                 await data.delete()
-                await k.edit_text("<b>Your video / file is successfully deleted !</b>")
+                await k.edit_text("<b>ʏᴏᴜʀ ᴠɪᴅᴇᴏ / ғɪʟᴇ ɪs ᴅᴇʟᴇᴛᴇᴅ sᴜᴄᴄᴇssғᴜʟʟʏ.</b>")
             except:
                 pass
 
@@ -103,8 +103,8 @@ async def start_command(client: Client, message: Message):
         reply_markup = InlineKeyboardMarkup(
             [
                 [
-                    InlineKeyboardButton('⚡️ ᴍᴏᴠɪᴇs', url='https://t.me/+QVewP06XCPFiYWZl'),
-                    InlineKeyboardButton('🍁 sᴇʀɪᴇs', url='https://t.me/webseries_flix')
+                    InlineKeyboardButton('ᴍᴏᴠɪᴇ', url='https://t.me/+YExNUN4Vp81kNGQ1'),
+                    InlineKeyboardButton('sᴜᴘᴘᴏʀᴛ', url='https://t.me/+-o9isg1zi01kOTk1')
                 ]
             ]
         )
@@ -145,7 +145,7 @@ async def not_joined(client: Client, message: Message):
         buttons.append(
             [
                 InlineKeyboardButton(
-                    text = 'ʀᴇʟᴏᴀᴅ',
+                    text = 'ᴛʀʏ ᴀɢᴀɪɴ',
                     url = f"https://t.me/{client.username}?start={message.command[1]}"
                 )
             ]
