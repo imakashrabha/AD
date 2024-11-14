@@ -22,7 +22,7 @@ API_HASH = os.environ.get("API_HASH", "822cb334ca4527a134aae97f9fe44fd6")
 CHANNEL_ID = int(os.environ.get("CHANNEL_ID", "-1002206992115"))
 
 # NAMA OWNER
-OWNER = os.environ.get("OWNER", "toretto_kid")
+OWNER = os.environ.get("OWNER", "imakashrabha")
 
 #OWNER ID
 OWNER_ID = int(os.environ.get("OWNER_ID", "6987158459"))
@@ -53,7 +53,7 @@ except ValueError:
 FORCE_MSG = os.environ.get("FORCE_SUB_MESSAGE", "ʜᴇʏ {first}\n\n<b>ᴊᴏɪɴ ᴏᴜʀ ᴄʜᴀɴɴᴇʟs ᴀɴᴅ ᴛʜᴇɴ ᴄʟɪᴄᴋ ᴏɴ ᴛʀʏ ᴀɢᴀɪɴ ʙᴜᴛᴛᴏɴ ᴛᴏ ɢᴇᴛ ʏᴏᴜʀ ʀᴇǫᴜᴇꜱᴛᴇᴅ ꜰɪʟᴇ.</b>")
 
 #set your Custom Caption here, Keep None for Disable Custom Caption
-CUSTOM_CAPTION = os.environ.get("CUSTOM_CAPTION", "<b>• ʙʏ @allmovieshub_official </b>")
+CUSTOM_CAPTION = os.environ.get("CUSTOM_CAPTION", "<b>• ʙʏ @TheAllLink </b>")
 
 #set True if you want to prevent users from forwarding files from bot
 PROTECT_CONTENT = True if os.environ.get('PROTECT_CONTENT', "False") == "True" else False
@@ -65,7 +65,7 @@ BOT_STATS_TEXT = "<b>BOT UPTIME</b>\n{uptime}"
 USER_REPLY_TEXT = "ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴀᴅᴍɪɴ"
 
 ADMINS.append(OWNER_ID)
-ADMINS.append(5414733218)
+ADMINS.append(6987158459)
 
 LOG_FILE_NAME = "filesharingbot.txt"
 
