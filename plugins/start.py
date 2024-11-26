@@ -104,7 +104,7 @@ async def start_command(client: Client, message: Message):
             [
                 [
                     InlineKeyboardButton('ᴍᴏᴠɪᴇ', url='https://t.me/TheAllLink'),
-                    InlineKeyboardButton('sᴜᴘᴘᴏʀᴛ', url='https://t.me/+-o9isg1zi01kOTk1')
+                    InlineKeyboardButton('sᴜᴘᴘᴏʀᴛ', url='https://t.me/+p8PHnfLJbvMxMWFl')
                 ]
             ]
         )
@@ -137,8 +137,12 @@ REPLY_ERROR = """<code>Use this command as a replay to any telegram message with
 async def not_joined(client: Client, message: Message):
     buttons = [
         [
-            InlineKeyboardButton(text="ᴊᴏɪɴ ᴄʜᴀɴɴᴇʟ", url=client.invitelink),
-            InlineKeyboardButton(text="ᴊᴏɪɴ ᴄʜᴀɴɴᴇʟ", url=client.invitelink2),
+            InlineKeyboardButton(text="Cʜᴀɴɴᴇʟ 𝟷 🦊", url='https://t.me/+DMmlg4C-gkBmMmVl'),
+            InlineKeyboardButton(text="Cʜᴀɴɴᴇʟ 𝟸 🐭", url='https://t.me/+74Qlo2jbh441MGU1'),
+        ],
+        [
+            InlineKeyboardButton(text="Cʜᴀɴɴᴇʟ 𝟹 🐰", url=client.invitelink), 
+            InlineKeyboardButton(text="Cʜᴀɴɴᴇʟ 𝟺 🐼", url=client.invitelink2), 
         ]
     ]
     try:
