@@ -88,7 +88,7 @@ async def start_command(client: Client, message: Message):
             except:
                 pass
 
-        k = await message.reply_text("<b>👆ᴛʜɪs ᴡɪʟʟ ʙᴇ ᴅᴇʟᴇᴛᴇᴅ ɪɴ 5 ᴍɪɴᴜᴛᴇs\n❗️ғᴏʀᴡᴀʀᴅ ɪᴛ ᴛᴏ ʏᴏᴜʀ sᴀᴠᴇᴅ ᴍᴇssᴀɢᴇs ʙᴇғᴏʀᴇ ᴅᴏᴡɴʟᴏᴀᴅɪɴɢ.</b>")
+        k = await message.reply_text("<b>𝖥𝗂𝗅𝖾𝗌 𝗐𝗂𝗅𝗅 𝖻𝖾 𝖽𝖾𝗅𝖾𝗍𝖾𝖽 𝖠𝖿𝗍𝖾𝗋 5 𝗆𝗂𝗇𝗎𝗍𝖾𝗌. 𝖲𝖺𝗏𝖾 𝗍𝗁𝖾𝗆 𝗍𝗈 𝗍𝗁𝖾 𝖲𝖺𝗏𝖾𝖽 𝖬𝖾𝗌𝗌𝖺𝗀𝖾 𝗇𝗈𝗐!</b>")
         await asyncio.sleep(SECONDS)
 
         for data in Codeflix:
@@ -104,7 +104,7 @@ async def start_command(client: Client, message: Message):
             [
                 [
                     InlineKeyboardButton('𝖬𝗈𝗏𝗂𝖾', url='https://t.me/+xyQVT_t99splZGFl'),
-                    InlineKeyboardButton('𝖦𝗋𝗈𝗎𝗉', url='https://t.me/+-o9isg1zi01kOTk1')
+                    InlineKeyboardButton('𝖦𝗋𝗈𝗎𝗉', url='https://t.me/+p8PHnfLJbvMxMWFl')
                 ]
             ]
         )
