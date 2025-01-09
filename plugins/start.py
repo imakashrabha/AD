@@ -56,7 +56,7 @@ async def start_command(client: Client, message: Message):
                 ids = [int(int(argument[1]) / abs(client.db_channel.id))]
             except:
                 return
-        temp_msg = await message.reply("Wait A Second...")
+        temp_msg = await message.reply("𝖶𝖺𝗂𝗍 𝖺 𝗌𝖾𝖼𝗈𝗇𝖽...")
         try:
             messages = await get_messages(client, ids)
         except:
@@ -139,7 +139,7 @@ async def not_joined(client: Client, message: Message):
         [
             InlineKeyboardButton(text="𝖢𝖮𝖬𝖬𝖴𝖭𝖨𝖳𝖸 💀", url=client.invitelink),
 ], [
-            InlineKeyboardButton(text="𝖠𝗅𝗅 𝖬𝗈𝗏𝗂𝖾𝗌𝖧𝗎𝖻 𝖮𝖿𝖿𝗂𝖼𝗂𝖺𝗅 🍿🎥", url=client.invitelink2),
+            InlineKeyboardButton(text="𝖬𝗈𝗏𝗂𝖾𝗌𝖧𝗎𝖻 𝖮𝖿𝖿𝗂𝖼𝗂𝖺𝗅 - 𝖭𝖾𝗐 𝖬𝗈𝗏𝗂𝖾𝗌", url=client.invitelink2),
       ]
     ]
     try:
