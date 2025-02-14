@@ -210,3 +210,8 @@ async def send_text(client: Bot, message: Message):
         msg = await message.reply(REPLY_ERROR)
         await asyncio.sleep(8)
         await msg.delete()
+        
+@Bot.on_callback_query(filters.regex("close"))
+async def close_callback(client, callback_query):
+    await callback_query.message.delete()
+    
