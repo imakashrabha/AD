@@ -13,28 +13,27 @@ from helper_func import subscribed, encode, decode, get_messages
 from database.database import add_user, del_user, full_userbase, present_user
 
 # Time in seconds before auto-delete
-SECONDS = int(os.getenv("SECONDS", "300"))  # 5 minutes (fixed value)
+SECONDS = int(os.getenv("SECONDS", "10"))  # 5 minutes
 
 @Bot.on_message(filters.command('start') & filters.private & subscribed)
 async def start_command(client: Client, message: Message):
     user_id = message.from_user.id
-    
+
     if not await present_user(user_id):
         try:
             await add_user(user_id)
         except Exception:
             pass
-    
+
     text = message.text
     if len(text) > 7:
         try:
             base64_string = text.split(" ", 1)[1]
+            string = await decode(base64_string)
+            argument = string.split("-")
         except IndexError:
             return
-        
-        string = await decode(base64_string)
-        argument = string.split("-")
-        
+
         ids = []
         try:
             if len(argument) == 3:
@@ -47,16 +46,15 @@ async def start_command(client: Client, message: Message):
             return
 
         temp_msg = await message.reply("ᴡᴀɪᴛ...")
-        
         try:
             messages = await get_messages(client, ids)
         except Exception:
             await message.reply_text("Something went wrong..!")
             return
-        
-        await temp_msg.delete()
 
+        await temp_msg.delete()
         sent_messages = []
+        
         for msg in messages:
             caption = (CUSTOM_CAPTION.format(previouscaption=msg.caption.html if msg.caption else "", 
                                              filename=msg.document.file_name) 
@@ -79,8 +77,8 @@ async def start_command(client: Client, message: Message):
                 continue
             except Exception:
                 continue
-        
-        delete_msg = await message.reply_text("<b>𝖳𝗁𝗂𝗌 𝗏𝗂𝖽𝖾𝗈 𝗂𝗌 𝖽𝖾𝗅𝖾𝗍𝖾𝖽 𝖺𝗎𝗍𝗈𝗆𝖺𝗍𝗂𝖼𝖺𝗅𝗅𝗒 𝗂𝗇 5𝗆𝗂𝗇𝗎𝗍𝖾𝗌..\n 𝖥𝗈𝗋𝗐𝖺𝗋𝖽 𝗂𝗇 𝗒𝗈𝗎𝗋 𝖲𝖺𝗏𝖾𝖽 𝖬𝖾𝗌𝗌𝖺𝗀𝖾𝗌..!!</b>")
+
+        delete_msg = await message.reply_text("<b>This video will be deleted automatically in 5 minutes..\nSave it in your Saved Messages!</b>")
         await asyncio.sleep(SECONDS)
 
         for msg in sent_messages:
@@ -88,28 +86,26 @@ async def start_command(client: Client, message: Message):
                 await msg.delete()
             except Exception:
                 continue
-        
-        from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-try:
-    await delete_msg.edit_text(
-        f"<b>›› 𝖯𝗋𝗂𝗏𝗂𝗈𝗎𝗌 𝗏𝗂𝖽𝖾𝗈 𝗐𝖺𝗌 𝖽𝖾𝗅𝖾𝗍𝖾𝖽. 𝖨𝖿 𝗒𝗈𝗎 𝗐𝖺𝗇𝗍 \n𝗍𝗁𝖾 𝗌𝖺𝗆𝖾 𝗏𝗂𝖽𝖾𝗈 𝖺𝗀𝖺𝗂𝗇, 𝖼𝗅𝗂𝖼𝗄 𝗈𝗇:</b>",
-        reply_markup=InlineKeyboardMarkup(
-            [
-                [InlineKeyboardButton("📥 Get Video", url=f"https://t.me/{client.username}?start={message.command[1]}")],
-                [InlineKeyboardButton("❌ Close", callback_data="close")]
-            ]
-        )
-    )
-except Exception:
-    pass
+        try:
+            await delete_msg.edit_text(
+                f"<b>The previous video was deleted. If you want the same video again, click on:</b>",
+                reply_markup=InlineKeyboardMarkup(
+                    [
+                        [InlineKeyboardButton("📥 Get Video", url=f"https://t.me/{client.username}?start={base64_string}"),
+                         InlineKeyboardButton("❌ Close", callback_data="close")]
+                    ]
+                )
+            )
+        except Exception:
+            pass
 
     else:
         reply_markup = InlineKeyboardMarkup(
             [
-                [InlineKeyboardButton(text="• ғᴏʀ ᴍᴏʀᴇ •", url="https://t.me/zoroflix")],
-                [InlineKeyboardButton("ᴀʙᴏᴜᴛ", callback_data="about"),
-                 InlineKeyboardButton("ᴄʟᴏsᴇ", callback_data="close")]
+                [InlineKeyboardButton(text="• More •", url="https://t.me/zoroflix")],
+                [InlineKeyboardButton("About", callback_data="about"),
+                 InlineKeyboardButton("Close", callback_data="close")]
             ]
         )
         await message.reply_text(
@@ -135,14 +131,14 @@ REPLY_ERROR = "<code>Use this command as a reply to any Telegram message.</code>
 @Bot.on_message(filters.command('start') & filters.private)
 async def not_joined(client: Client, message: Message):
     buttons = [
-        [InlineKeyboardButton(text="ᴊᴏɪɴ ᴄʜᴀɴɴᴇʟ", url=client.invitelink),
-        InlineKeyboardButton(text="ᴊᴏɪɴ ᴄʜᴀɴɴᴇʟ", url=client.invitelink2)]
+        [InlineKeyboardButton(text="Join Channel", url=client.invitelink),
+         InlineKeyboardButton(text="Join Channel", url=client.invitelink2)]
     ]
-    
+
     try:
         buttons.append(
             [InlineKeyboardButton(
-                text="ᴛʀʏ ᴀɢᴀɪɴ",
+                text="Try Again",
                 url=f"https://t.me/{client.username}?start={message.command[1]}"
             )]
         )
@@ -174,9 +170,9 @@ async def send_text(client: Bot, message: Message):
         query = await full_userbase()
         broadcast_msg = message.reply_to_message
         total, successful, blocked, deleted, unsuccessful = 0, 0, 0, 0, 0
-        
+
         pls_wait = await message.reply("<i>Broadcasting Message... This will take some time</i>")
-        
+
         for chat_id in query:
             try:
                 await broadcast_msg.copy(chat_id)
@@ -192,9 +188,9 @@ async def send_text(client: Bot, message: Message):
                 deleted += 1
             except Exception:
                 unsuccessful += 1
-            
+
             total += 1
-        
+
         status = (
             f"<b><u>Broadcast Completed</u></b>\n\n"
             f"Total Users: <code>{total}</code>\n"
@@ -203,15 +199,14 @@ async def send_text(client: Bot, message: Message):
             f"Deleted Accounts: <code>{deleted}</code>\n"
             f"Unsuccessful: <code>{unsuccessful}</code>"
         )
-        
+
         await pls_wait.edit(status)
 
     else:
         msg = await message.reply(REPLY_ERROR)
         await asyncio.sleep(8)
         await msg.delete()
-        
+
 @Bot.on_callback_query(filters.regex("close"))
 async def close_callback(client, callback_query):
     await callback_query.message.delete()
-    
