@@ -1,3 +1,5 @@
+# (©) AxomBotz
+
 import os
 import asyncio
 from pyrogram import Client, filters, __version__
@@ -10,8 +12,8 @@ from config import ADMINS, FORCE_MSG, START_MSG, CUSTOM_CAPTION, DISABLE_CHANNEL
 from helper_func import subscribed, encode, decode, get_messages
 from database.database import add_user, del_user, full_userbase, present_user
 
-# Auto-delete time (in seconds)
-SECONDS = int(os.getenv("SECONDS", "10"))  # Default 5 minutes
+# Time in seconds before auto-delete
+SECONDS = int(os.getenv("SECONDS", "300"))  # 5 minutes (fixed value)
 
 @Bot.on_message(filters.command('start') & filters.private & subscribed)
 async def start_command(client: Client, message: Message):
@@ -87,26 +89,82 @@ async def start_command(client: Client, message: Message):
             except Exception:
                 continue
         
-        try:
-            await delete_msg.edit_text(
-                f"<b>›› 𝖯𝗋𝗂𝗏𝗂𝗈𝗎𝗌 𝗏𝗂𝖽𝖾𝗈 𝗐𝖺𝗌 𝖽𝖾𝗅𝖾𝗍𝖾𝖽. 𝖨𝖿 𝗒𝗈𝗎 𝗐𝖺𝗇𝗍 \n𝗍𝗁𝖾 𝗌𝖺𝗆𝖾 𝗏𝗂𝖽𝖾𝗈 𝖺𝗀𝖺𝗂𝗇, 𝖼𝗅𝗂𝖼𝗄 𝗈𝗇:</b>",
-                reply_markup=InlineKeyboardMarkup(
-                    [
-                        [InlineKeyboardButton("📥 Get Video", url=f"https://t.me/{client.username}?start={message.command[1]}")],
-                        [InlineKeyboardButton("❌ Close", callback_data="close")]
-                    ]
-                )
-            )
-        except Exception:
-            pass
+        from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-@Bot.on_callback_query(filters.regex("close"))
-async def close_callback(client, callback_query):
-    await callback_query.message.delete()
+try:
+    await delete_msg.edit_text(
+        f"<b>›› 𝖯𝗋𝗂𝗏𝗂𝗈𝗎𝗌 𝗏𝗂𝖽𝖾𝗈 𝗐𝖺𝗌 𝖽𝖾𝗅𝖾𝗍𝖾𝖽. 𝖨𝖿 𝗒𝗈𝗎 𝗐𝖺𝗇𝗍 \n𝗍𝗁𝖾 𝗌𝖺𝗆𝖾 𝗏𝗂𝖽𝖾𝗈 𝖺𝗀𝖺𝗂𝗇, 𝖼𝗅𝗂𝖼𝗄 𝗈𝗇:</b>",
+        reply_markup=InlineKeyboardMarkup(
+            [
+                [InlineKeyboardButton("📥 Get Video", url=f"https://t.me/{client.username}?start={message.command[1]}")],
+                [InlineKeyboardButton("❌ Close", callback_data="close")]
+            ]
+        )
+    )
+except Exception:
+    pass
+
+    else:
+        reply_markup = InlineKeyboardMarkup(
+            [
+                [InlineKeyboardButton(text="• ғᴏʀ ᴍᴏʀᴇ •", url="https://t.me/zoroflix")],
+                [InlineKeyboardButton("ᴀʙᴏᴜᴛ", callback_data="about"),
+                 InlineKeyboardButton("ᴄʟᴏsᴇ", callback_data="close")]
+            ]
+        )
+        await message.reply_text(
+            text=START_MSG.format(
+                first=message.from_user.first_name,
+                last=message.from_user.last_name or "",
+                username=f"@{message.from_user.username}" if message.from_user.username else "No Username",
+                mention=message.from_user.mention,
+                id=message.from_user.id
+            ),
+            reply_markup=reply_markup,
+            disable_web_page_preview=True,
+            quote=True
+        )
+
+#=====================================================================================##
+
+WAIT_MSG = "<b>Processing ...</b>"
+REPLY_ERROR = "<code>Use this command as a reply to any Telegram message.</code>"
+
+#=====================================================================================##
+
+@Bot.on_message(filters.command('start') & filters.private)
+async def not_joined(client: Client, message: Message):
+    buttons = [
+        [InlineKeyboardButton(text="ᴊᴏɪɴ ᴄʜᴀɴɴᴇʟ", url=client.invitelink),
+        InlineKeyboardButton(text="ᴊᴏɪɴ ᴄʜᴀɴɴᴇʟ", url=client.invitelink2)]
+    ]
+    
+    try:
+        buttons.append(
+            [InlineKeyboardButton(
+                text="ᴛʀʏ ᴀɢᴀɪɴ",
+                url=f"https://t.me/{client.username}?start={message.command[1]}"
+            )]
+        )
+    except IndexError:
+        pass
+
+    await message.reply(
+        text=FORCE_MSG.format(
+            first=message.from_user.first_name,
+            last=message.from_user.last_name or "",
+            username=f"@{message.from_user.username}" if message.from_user.username else "No Username",
+            mention=message.from_user.mention,
+            id=message.from_user.id
+        ),
+        reply_markup=InlineKeyboardMarkup(buttons),
+        quote=True,
+        disable_web_page_preview=True
+    )
 
 @Bot.on_message(filters.command('users') & filters.private & filters.user(ADMINS))
 async def get_users(client: Bot, message: Message):
-    msg = await client.send_message(chat_id=message.chat.id, text="<b>Processing ...</b>")
+    msg = await client.send_message(chat_id=message.chat.id, text=WAIT_MSG)
     users = await full_userbase()
     await msg.edit(f"{len(users)} users are using this bot")
 
@@ -149,6 +207,6 @@ async def send_text(client: Bot, message: Message):
         await pls_wait.edit(status)
 
     else:
-        msg = await message.reply("<code>Use this command as a reply to any Telegram message.</code>")
+        msg = await message.reply(REPLY_ERROR)
         await asyncio.sleep(8)
         await msg.delete()
